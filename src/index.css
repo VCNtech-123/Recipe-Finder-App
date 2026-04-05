@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme {
+  /* Fonts - assuming you added the Google Fonts link to index.html */
+  --font-display: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+
+  /* Your prestigious color palette */
+  --color-brand-violet: #2D1B4E;
+  --color-brand-gold: #D4AF37;
+  --color-main-bg: #FFF8F0;
+}
