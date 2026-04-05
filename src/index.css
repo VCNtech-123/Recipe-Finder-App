@@ -1,16 +1,29 @@
 @import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @theme {
   /* Fonts - assuming you added the Google Fonts link to index.html */
   --font-display: "Playfair Display", serif;
   --font-body: "Inter", sans-serif;
 
-  /* Your prestigious color palette */
-  --color-brand-violet: #2D1B4E;
-  --color-brand-gold: #D4AF37;
-  --color-main-bg: #FFF8F0;
-}
+  /* Main Accents */
+  --color-primary: #FF6B35;
+  --color-secondary: #F7931E;
+  --color-accent: #C73E1D;
+
+  /* Neutral Backgrounds & Cards */
+  --color-background: #FFF8F0;
+  --color-card: #FFFFFF;
+  
+  /* Text & Typography */
+  --color-foreground: #2C1810;
+  --color-muted: #F5E6D3;
+  --color-muted-foreground: #6B5D54;
+
+  --shadow-soft: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+                 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+  --shadow-mix: 0 0 15px 5px rgba(0, 0, 0, 0.05);
+                }
+
+
+

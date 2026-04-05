@@ -10,9 +10,9 @@ const Button = ({className, onClick, text, icon: Icon}) => {
 class FilterButton extends React.Component {
     render () {
         return (
-            <div className="flex gap-2">
-                <Button className={'bg-white flex gap-4 py-2 w-1/2 justify-center items-center rounded-lg'} onClick={this.props.searchButton} text={'Search'} icon={CiSearch} />
-                <Button className={'bg-white flex gap-4 py-2 w-1/2 justify-center items-center rounded-lg'} onClick={this.props.searchButton} text={'Favorites'} icon={CiHeart} />
+            <div className="flex gap-2 bg-card shadow-mix p-1.5 rounded-2xl">
+                <Button className={'bg-secondary flex gap-4 py-2 w-1/2 justify-center items-center rounded-3xl'} onClick={this.props.srhButton} text={'Search'} icon={CiSearch} />
+                <Button className={'bg-card flex gap-4 py-2 w-1/2 justify-center items-center rounded-3xl'} onClick={this.props.favButton} text={'Favorites'} icon={CiHeart} />
             </div>
         )
     }
