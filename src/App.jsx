@@ -2,6 +2,7 @@ import SearchRecipe from './components/SearchRecipe'
 import Header from './components/Header'
 import FilterButton from './components/FilterButton'
 import Card from './components/CardContainer'
+import CardInfo from './components/CardContainer'
 
 
 
@@ -13,10 +14,9 @@ function App() {
       <SearchRecipe />
       <FilterButton />
       <div className="flex flex-wrap gap-4">
-        <Card />
-        <Card />
+        <CardInfo />
       </div>
-      
+        
     </div>
   )
 }
