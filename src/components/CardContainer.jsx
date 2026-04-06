@@ -100,7 +100,7 @@ class CardCointainer extends React.Component {
     render() {
          return (
             <div className="flex flex-wrap gap-4">
-                {this.props.foodList.map(food => <Card key={food.idMeal} picture={food.strMealThumb} labels={food.strTags} foodName={food.strMeal} instructions={food.strInstructions} ingredients={food.ingredients} />)}
+                {this.props.foodList.map(food => <Card key={food.id} picture={food.picture} labels={food.tags} foodName={food.name} instructions={food.instructions} ingredients={food.ingredients} />)}
             </div>
         )
     }

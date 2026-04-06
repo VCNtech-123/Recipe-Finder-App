@@ -4,6 +4,8 @@ import SearchRecipe from '../components/SearchRecipe'
 import FilterButton from '../components/FilterButton'
 import CardContainer from '../components/CardContainer'
 import Loading from '../components/Loading';
+import { searchFood, initialRandomFoods } from '../utils/api'
+
 
 
 class Home extends React.Component {
@@ -13,7 +15,12 @@ class Home extends React.Component {
         isLoading: true
     }
 
-
+    componentDidMount () {
+        (async () => {
+          const data = await initialRandomFoods()
+          this.setState({ isLoading: false, foodList: data})
+        })()
+    }
 
     render() {
         return (
@@ -22,7 +29,7 @@ class Home extends React.Component {
                 <SearchRecipe />
                 <FilterButton />
                 <div className="relative flex-grow">
-                    {this.state.isLoading? <Loading />: <CardContainer />}
+                    {this.state.isLoading? <Loading />: <CardContainer foodList={this.state.foodList} />}
                 </div>
                 
             </div>
