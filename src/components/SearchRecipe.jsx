@@ -12,5 +12,4 @@ class SearchRecipe extends React.Component {
        
 }
 
-
 export default SearchRecipe;

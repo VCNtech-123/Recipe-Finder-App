@@ -1,26 +1,20 @@
 import SearchRecipe from './components/SearchRecipe'
 import Header from './components/Header'
 import FilterButton from './components/FilterButton'
-import Card from './components/CardContainer'
-import CardInfo from './components/CardContainer'
+import Loading from './components/Loading';
+import Home from './pages/Home'
+import { searchFood, initialRandomFoods } from './utils/api.js'
 
 
+(async () => {
+  const data = await initialRandomFoods()
+  console.log(data);
+})()
 
 function App() {
  
   return (
-    <div className="p-4 flex flex-col gap-4 bg-background min-h-screen">
-      <Header />
-      <SearchRecipe />
-      <FilterButton />
-      <div className="flex flex-wrap gap-4">
-        <CardInfo />
-        <CardInfo />
-        <CardInfo />
-        <CardInfo />
-      </div>
-        
-    </div>
+    <Home />
   )
 }
 
