@@ -15,6 +15,9 @@ function App() {
       <FilterButton />
       <div className="flex flex-wrap gap-4">
         <CardInfo />
+        <CardInfo />
+        <CardInfo />
+        <CardInfo />
       </div>
         
     </div>

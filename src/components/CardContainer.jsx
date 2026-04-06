@@ -1,6 +1,7 @@
 import React from 'react'
 import TestPicture from '../assets/TestPicture.jpg'
 import { RxCross2 } from "react-icons/rx";
+import { CiHeart } from "react-icons/ci";
 
 const FoodLabel = ({ label, className }) => {
     return (
@@ -18,10 +19,12 @@ class CardInfo extends React.Component {
 
     
     render () {
+
+        const { picture, labels, foodName, ingredients, instructions } = this.props;
         return (
         <>
-            <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"></div>
-            <div className="flex flex-col fixed bg-background w-5/6 h-4/5 overflow-y-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-xl">
+            <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={this.props.onClick}></div>
+            <div className="flex flex-col fixed bg-background w-5/6 h-4/5 overflow-y-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-xl" onClick={(e) => e.stopPropagation()}>
                 <div className="w-full h-70 relative">
                     <img src={TestPicture} alt="" className="w-full max-h-70 object-cover" style={{ 
                         maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
@@ -44,7 +47,7 @@ class CardInfo extends React.Component {
                     </div>
                     <div className="flex flex-col gap-3">
                          <h1 className="border-l-3 border-l-primary font-bold px-2">Instructions</h1>
-                         <p className="text-xs bg-card p-4">Preheat oven to 350° F. Spray a 9x13-inch baking pan with non-stick spray.\r\nCombine soy sauce, ½ cup water, brown sugar, ginger and garlic in a small saucepan and cover. Bring to a boil over medium heat. Remove lid and cook for one minute once boiling.\r\nMeanwhile, stir together the corn starch and 2 tablespoons of water in a separate dish until smooth. Once sauce is boiling, add mixture to the saucepan and stir to combine. Cook until the sauce starts to thicken then remove from heat.\r\nPlace the chicken breasts in the prepared pan. Pour one cup of the sauce over top of chicken. Place chicken in oven and bake 35 minutes or until cooked through. Remove from oven and shred chicken in the dish using two forks.\r\n*Meanwhile, steam or cook the vegetables according to package directions.\r\nAdd the cooked vegetables and rice to the casserole dish with the chicken. Add most of the remaining sauce, reserving a bit to drizzle over the top when serving. Gently toss everything together in the casserole dish until combined. Return to oven and cook 15 minutes. Remove from oven and let stand 5 minutes before serving. Drizzle each serving with remaining sauce. Enjoy!</p>
+                            <p className="text-xs bg-card p-4 whitespace-pre-line">{`DIRECTIONS:\r\nSTEP 1 - SAUCE\r\nIn a bowl, add 2 Cups of water, 2 Tablespoon soy sauce, 2 Tablespoon white vinegar, sherry cooking wine, 1/4 Teaspoon white pepper, minced ginger, minced garlic, hot pepper, ketchup, hoisin sauce, and sugar.\r\nMix together well and set aside.\r\nSTEP 2 - MARINATING THE CHICKEN\r\nIn a bowl, add the chicken, 1 pinch of salt, 1 pinch of white pepper, 2 egg whites, and 3 Tablespoon of corn starch\r\nSTEP 3 - DEEP FRY THE CHICKEN\r\nDeep fry the chicken at 350 degrees for 3-4 minutes or until it is golden brown and loosen up the chicken so that they don't stick together.\r\nSet the chicken aside.\r\nSTEP 4 - STIR FRY\r\nAdd the sauce to the wok and then the broccoli and wait until it is boiling.\r\nTo thicken the sauce, whisk together 2 Tablespoon of cornstarch and 4 Tablespoon of water in a bowl and slowly add to your stir-fry until it's the right thickness.\r\nNext add in the chicken and stir-fry for a minute and serve on a plate`}</p>
                     </div>
                 </div>
                 <div className="absolute bg-white/80 border-white rounded-full p-2 top-2 left-67" onClick={this.props.onClick}>
@@ -65,14 +68,14 @@ class Card extends React.Component {
     }
 
     handleClick = () => {
-        this.setState({ clicked: true }); 
+        this.setState((prevState) => ({ clicked: !prevState.clicked })); 
     }
 
     render () {
 
         return(
         !this.state.clicked? (
-            <div className="flex flex-col w-[calc(50%_-_1rem)] bg-card font-body rounded-xl pb-4" onClick={this.handleClick}>
+            <div className="flex flex-col w-[calc(50%_-_1rem)] bg-card font-body rounded-xl pb-4 relative" onClick={this.handleClick}>
                 <div>
                     <img src={TestPicture} alt="" className="rounded-t-xl hover:scale-110 ease-in-out duration-300 transition-transform" />
                 </div>
@@ -83,9 +86,12 @@ class Card extends React.Component {
                         <FoodLabel label={'Stew'} className={'text-xs bg-background flex items-center justify-center py-1 px-3 rounded-2xl text-foreground border-1 border-card'} />
                     </div>
                 </div>
+                <div className="absolute bg-white/80 border-white rounded-full p-2 top-2 left-29">
+                    <CiHeart />
+                </div>
             </div>
         ) : (
-            <CardInfo onClick={this.handleClick} />
+            <CardInfo onClick={this.handleClick} onBlur={this.handleClick} />
         )
     )
     }
