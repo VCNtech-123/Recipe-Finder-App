@@ -7,16 +7,14 @@ import Loading from '../components/Loading';
 import { searchFood, initialRandomFoods } from '../utils/api'
 import { debounce } from '../utils/helper'
 
-const debounceSearch = debounce( async (searchValue) => {
-    return searchFood(searchValue)
-}, 500) 
-
 class Home extends React.Component {
 
     state={
         foodList: [],
-        isLoading: true
+        isLoading: true,
+        filter: 'search'
     }
+
 
     componentDidMount () {
         (async () => {
@@ -25,6 +23,7 @@ class Home extends React.Component {
         })()
     }
 
+
     debouceSearch = debounce(async (searchValue) => {
         this.setState({isLoading: true});
         const data = await searchFood(searchValue);
@@ -32,22 +31,37 @@ class Home extends React.Component {
         this.setState({isLoading: false, foodList: data})
     }, 500);
 
+
     handleChange = (e) => {
         const searchValue = e.target.value;
 
         this.debouceSearch(searchValue)
     }   
 
+    toggleFavorites = () => {
+        this.setState({ filter: 'favorites' })
+    }
+
+    toggleSearch = () => {
+        this.setState({ filter: 'search' })
+    }
+
     render() {
+
+        const isSearch = this.state.filter === 'search';
+        const sbgStyle = isSearch ? 'bg-secondary' : 'bg-card'
+        const fbgStyle = isSearch ? 'bg-card' : 'bg-secondary' 
+
         return (
-            <div className="p-4 flex flex-col gap-4 bg-background min-h-screen">
-                <Header />
-                <SearchRecipe onChange={this.handleChange} />
-                <FilterButton />
-                <div className="relative flex-grow">
-                    {this.state.isLoading? <Loading />: <CardContainer foodList={this.state.foodList} />}
+            <div className=" bg-background min-h-screen ">
+                <div className="lg:w-[1120px] mx-auto p-4 flex flex-col gap-4">
+                    <Header />
+                    <SearchRecipe onChange={this.handleChange} />
+                    <FilterButton sbgStyle={sbgStyle} fbgStyle={fbgStyle} srhButton={this.toggleSearch} fvrButton={this.toggleFavorites} />
+                    <div className="relative flex-grow">
+                        {this.state.isLoading? <Loading />: <CardContainer foodList={this.state.foodList} />}
+                    </div>
                 </div>
-                
             </div>
         )
     }

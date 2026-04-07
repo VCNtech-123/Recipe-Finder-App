@@ -69,11 +69,11 @@ class Card extends React.Component {
 
     render () {
 
-        const { picture, labels, foodName, ingredients, instructions } = this.props
+        const { picture, labels, foodName, ingredients, instructions, onClick } = this.props
 
         return(
         !this.state.clicked? (
-            <div className="flex flex-col h-full shadow-md w-[calc(50%_-_1rem)] bg-card font-body rounded-xl pb-4 relative" onClick={this.handleClick}>
+            <div className="flex flex-col h-full shadow-md w-[calc(50%_-_1rem)] bg-card font-body rounded-xl pb-4 relative lg:hover:scale-105 300ms ease-in-out" onClick={this.handleClick}>
                 <div>
                     <img src={picture} alt={'picture'} className="rounded-t-xl hover:scale-110 ease-in-out duration-300 transition-transform object-cover min-h-50 max-h-50 w-full" />
                 </div>
@@ -83,7 +83,7 @@ class Card extends React.Component {
                         {labels.map(label => <FoodLabel key={label} label={label} className={'text-xs bg-background flex items-center justify-center py-1 px-3 rounded-2xl text-foreground border-1 border-card'} />)}
                     </div>
                 </div>
-                <div className="absolute bg-white/80 border-white rounded-full p-2 top-2 right-2">
+                <div className="absolute bg-white/80 border-white rounded-full p-2 top-2 right-2" onClick={onClick}>
                     <CiHeart />
                 </div>
             </div>
@@ -100,7 +100,7 @@ class CardCointainer extends React.Component {
     render() {
          return (
             <div className="flex flex-wrap gap-4 justify-center items-center">
-                {this.props.foodList.map(food => <Card key={food.id} picture={food.picture} labels={food.tags} foodName={food.name} instructions={food.instructions} ingredients={food.ingredients} />)}
+                {this.props.foodList.map(food => <Card key={food.id} picture={food.picture} labels={food.tags} foodName={food.name} instructions={food.instructions} ingredients={food.ingredients} onClick={this.props.onClick} />)}
             </div>
         )
     }
