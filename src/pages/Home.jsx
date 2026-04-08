@@ -52,7 +52,7 @@ class Home extends React.Component {
             if (isFav) return { favoriteList: prevState.favoriteList.filter(meal => meal.id !== +id) }
 
             const newFav = recipeFinder(id, prevState.foodList)
-
+            console.log(newFav)
             return {
                 favoriteList: [...prevState.favoriteList, newFav]
             }
@@ -77,12 +77,12 @@ class Home extends React.Component {
                     <SearchRecipe onChange={this.handleChange} />
                     <FilterButton sbgStyle={sbgStyle} fbgStyle={fbgStyle} srhButton={this.toggleSearch} fvrButton={this.toggleFavorites} />
                     <div className="relative flex-grow">
-                        {this.state.isLoading? <Loading />: <CardContainer foodList={renderMode} onClick={this.addFavorite} />}
+                        {this.state.isLoading? <Loading />: <CardContainer foodList={renderMode} onClick={this.addFavorite} favorites={this.state.favoriteList} />}
                     </div>
                 </div>
             </div>
         )
     }
 }
- /* bg-white/80 */
+
 export default Home;

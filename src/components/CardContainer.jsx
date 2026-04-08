@@ -23,7 +23,7 @@ class CardInfo extends React.Component {
         return (
         <>
             <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={this.props.onClick}></div>
-            <div className="flex flex-col fixed bg-background w-5/6 h-4/5 overflow-y-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-xl" onClick={(e) => e.stopPropagation()}>
+            <div className="flex flex-col fixed bg-background w-5/6 h-4/5 overflow-y-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] rounded-xl" onClick={(e) => e.stopPropagation()}>
                 <div className="w-full h-70 relative">
                     <img src={picture} alt="" className="w-full max-h-70 object-cover" style={{ 
                         maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
@@ -38,7 +38,7 @@ class CardInfo extends React.Component {
                     <div className="flex flex-col gap-3">
                         <h1 className="border-l-3 border-l-primary font-bold px-2">Ingredients</h1>
                         <ul className="flex flex-col gap-2 list-disc list-inside marker:text-primary">
-                            {ingredients.map(({ ingredient, measurement}) => <Ingredient key={ingredient} ingredient={ingredient} measurement={measurement} />)}
+                            {ingredients.map(({ ingredient, measurement}) => <Ingredient key={`${ingredient}-${measurement}`} ingredient={ingredient} measurement={measurement} />)}
                         </ul>
                     </div>
                     <div className="flex flex-col gap-3">
@@ -102,14 +102,20 @@ class Card extends React.Component {
 
 }
 
-class CardCointainer extends React.Component {
+class CardContainer extends React.Component {
     render() {
+
+        const {foodList, favorites, onClick } = this.props
+
          return (
             <div className="flex flex-wrap gap-4 justify-center items-center">
-                {this.props.foodList.map(food => <Card key={food.id} id={food.id} picture={food.picture} labels={food.tags} foodName={food.name} instructions={food.instructions} ingredients={food.ingredients} onClick={this.props.onClick} />)}
+                {foodList.map(food => {
+                    const isFavorite = favorites.some(favFood => favFood.id === food.id)
+                    return <Card key={food.id} id={food.id} picture={food.picture} labels={food.tags} foodName={food.name} instructions={food.instructions} ingredients={food.ingredients} isFavorite={isFavorite} onClick={onClick} />
+                    })}
             </div>
         )
     }
 }
 
-export default CardCointainer;
+export default CardContainer;

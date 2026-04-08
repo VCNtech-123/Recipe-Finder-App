@@ -10,5 +10,5 @@ export const debounce = (func, delay) => {
 }
 
 export const recipeFinder = (id, arr) => {
-    return arr.find (meal => meal.id === +id); 
+    return arr.find (meal => +meal.id === +id); 
 }
