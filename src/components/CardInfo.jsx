@@ -22,7 +22,7 @@ class CardInfo extends React.Component {
         return (
         <>
             <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={this.props.onClick}></div>
-            <div className="flex flex-col fixed bg-background w-5/6 h-4/5 overflow-y-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] rounded-xl" onClick={(e) => e.stopPropagation()}>
+            <div className="flex flex-col fixed bg-background w-5/6 h-4/5 overflow-y-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] rounded-xl lg:w-3/6" onClick={(e) => e.stopPropagation()}>
                 <div className="w-full h-70 relative">
                     <img src={recipeInfo.picture} alt="" className="w-full max-h-70 object-cover" style={{ 
                         maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',

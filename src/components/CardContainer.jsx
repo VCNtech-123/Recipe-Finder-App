@@ -27,9 +27,9 @@ class Card extends React.Component {
 
         return(
         
-            <div className="flex flex-col h-full shadow-md w-[calc(50%_-_1rem)] bg-card font-body rounded-xl pb-4 relative lg:hover:scale-105 300ms ease-in-out z-40" onClick={this.showCardInfo}>
+            <div className="flex flex-col h-full shadow-md w-[calc(50%_-_1rem)] bg-card font-body rounded-xl pb-4 relative lg:hover:scale-105 duration-300 ease-in-out z-40" onClick={this.showCardInfo}>
                 <div>
-                    <img src={picture} alt={'picture'} className="rounded-t-xl hover:scale-110 ease-in-out duration-300 transition-transform object-cover min-h-50 max-h-50 w-full" />
+                    <img src={picture} alt={'picture'} className="rounded-t-xl object-cover min-h-50 max-h-50 w-full" />
                 </div>
                 <div className="px-3">
                     <h1 className="text-sm my-4 font-bold h-12">{foodName}</h1>

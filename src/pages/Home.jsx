@@ -6,13 +6,15 @@ import CardContainer from '../components/CardContainer'
 import CardInfo from '../components/CardInfo'
 import Loading from '../components/Loading';
 import { searchFood, initialRandomFoods } from '../utils/api'
-import { debounce, recipeFinder } from '../utils/helper'
+import { debounce, recipeFinder, saveFavorites, loadFavorites } from '../utils/helper'
+
+const favoriteRecipes = loadFavorites();
 
 class Home extends React.Component {
 
     state={
         foodList: [],
-        favoriteList: [],
+        favoriteList: favoriteRecipes,
         isLoading: true,
         selectedRecipe: null,
         filter: 'search'
@@ -40,7 +42,7 @@ class Home extends React.Component {
     }
 
     debouceSearch = debounce(async (searchValue) => {
-        this.setState({isLoading: true});
+        this.setState({isLoading: true, filter: 'search'});
         const data = await searchFood(searchValue);
 
         this.setState({isLoading: false, foodList: data})
@@ -64,11 +66,12 @@ class Home extends React.Component {
         this.setState((prevState) =>{
 
             const isFav = prevState.favoriteList.some(fav => +fav.id === +id);
-
-            if (isFav) return { favoriteList: prevState.favoriteList.filter(meal => meal.id !== +id) }
+            if (isFav) return { 
+                favoriteList: prevState.favoriteList.filter(meal => +meal.id !== +id) 
+            }
 
             const newFav = recipeFinder(id, prevState.foodList)
-            console.log(newFav)
+            
             return {
                 favoriteList: [...prevState.favoriteList, newFav]
             }
@@ -83,8 +86,7 @@ class Home extends React.Component {
 
         const isFavorite = this.state.filter === 'favorites';
         const renderMode = isFavorite? this.state.favoriteList : this.state.foodList;
-
-        console.log(this.state.selectedRecipe);
+        
         return (
             <div className=" bg-background min-h-screen ">
                 <div className="lg:w-[1120px] mx-auto p-4 flex flex-col gap-4">
@@ -98,6 +100,12 @@ class Home extends React.Component {
                 </div>
             </div>
         )
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.favoriteList !== this.state.favoriteList) {
+            saveFavorites(this.state.favoriteList)
+        }
     }
 }
 
