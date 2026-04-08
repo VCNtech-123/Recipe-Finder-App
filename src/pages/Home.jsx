@@ -47,17 +47,17 @@ class Home extends React.Component {
     addFavorite = (id) => {
         this.setState((prevState) =>{
 
-            const isFav = prevState.favoriteList.some(fav => fav.id === +id);
+            const isFav = prevState.favoriteList.some(fav => +fav.id === +id);
 
             if (isFav) return { favoriteList: prevState.favoriteList.filter(meal => meal.id !== +id) }
 
-            const newFav = recipeFinder(id, this.state.foodList)
+            const newFav = recipeFinder(id, prevState.foodList)
 
             return {
                 favoriteList: [...prevState.favoriteList, newFav]
             }
         });
-    }
+    }   
 
     render() {
 
@@ -65,7 +65,10 @@ class Home extends React.Component {
         const sbgStyle = isSearch ? 'bg-secondary' : 'bg-card'
         const fbgStyle = isSearch ? 'bg-card' : 'bg-secondary' 
 
-        console.log(this.state.favoriteList)
+        const isFavorite = this.state.filter === 'favorites'
+        const renderMode = isFavorite? this.state.favoriteList : this.state.foodList
+
+        console.log(this.state.foodList)
 
         return (
             <div className=" bg-background min-h-screen ">
@@ -74,7 +77,7 @@ class Home extends React.Component {
                     <SearchRecipe onChange={this.handleChange} />
                     <FilterButton sbgStyle={sbgStyle} fbgStyle={fbgStyle} srhButton={this.toggleSearch} fvrButton={this.toggleFavorites} />
                     <div className="relative flex-grow">
-                        {this.state.isLoading? <Loading />: <CardContainer foodList={this.state.foodList} onClick={this.addFavorite} />}
+                        {this.state.isLoading? <Loading />: <CardContainer foodList={renderMode} onClick={this.addFavorite} />}
                     </div>
                 </div>
             </div>

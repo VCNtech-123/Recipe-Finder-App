@@ -61,7 +61,6 @@ class Card extends React.Component {
 
     state = {
         clicked: false,
-        favClicked: false
     }
 
     handleClick = () => {
@@ -69,17 +68,15 @@ class Card extends React.Component {
     }
 
     favoriteCard = (e) => {
-        this.setState((prevState) => ({ favClicked: !prevState.favClicked }))
         e.stopPropagation()
         this.props.onClick(this.props.id);
     }
 
     render () {
 
-        const { picture, labels, foodName, ingredients, instructions } = this.props
+        const { picture, labels, foodName, ingredients, instructions, isFavorite } = this.props
 
-        const isClicked = this.state.favClicked
-        const favBg = isClicked ? 'bg-yellow-300/80' :' bg-white/80'
+        const favBg = isFavorite ? 'bg-yellow-300/80' :' bg-white/80'
 
         return(
         !this.state.clicked? (
@@ -93,7 +90,7 @@ class Card extends React.Component {
                         {labels.map(label => <FoodLabel key={label} label={label} className={'text-xs bg-background flex items-center justify-center py-1 px-3 rounded-2xl text-foreground border-1 border-card'} />)}
                     </div>
                 </div>
-                <div className={`absolute ${favBg} border-white rounded-full p-2 top-2 right-2 z-50`} onClick={this.favoriteCard}>
+                <div className={`absolute ${favBg} border-white rounded-full p-2 top-2 right-2 z-50`} onClick={this.favoriteCard} >
                     <CiHeart />
                 </div>
             </div>
