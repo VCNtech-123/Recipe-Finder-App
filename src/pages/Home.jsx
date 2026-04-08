@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import SearchRecipe from '../components/SearchRecipe'
 import FilterButton from '../components/FilterButton'
 import CardContainer from '../components/CardContainer'
+import CardInfo from '../components/CardInfo'
 import Loading from '../components/Loading';
 import { searchFood, initialRandomFoods } from '../utils/api'
 import { debounce, recipeFinder } from '../utils/helper'
@@ -10,9 +11,11 @@ import { debounce, recipeFinder } from '../utils/helper'
 class Home extends React.Component {
 
     state={
+        isClicked: false,
         foodList: [],
         favoriteList: [],
         isLoading: true,
+        selectedRecipe: null,
         filter: 'search'
     }
 
@@ -21,6 +24,18 @@ class Home extends React.Component {
           const data = await initialRandomFoods()
           this.setState({ isLoading: false, foodList: data})
         })()
+    }
+
+    handleClick = (id) => {
+        this.setState((prevState) => ({ isClicked: !prevState.isClicked })); 
+        
+        const isSearch = this.state.filter === 'search' 
+        if (isSearch) {
+            this.setState({ selectedRecipe: recipeFinder(id, foodList) }) 
+        }
+        else {
+            this.setState({ selectedRecipe: recipeFinder(id, favoriteList) }) 
+        }
     }
 
     debouceSearch = debounce(async (searchValue) => {
@@ -62,13 +77,11 @@ class Home extends React.Component {
     render() {
 
         const isSearch = this.state.filter === 'search';
-        const sbgStyle = isSearch ? 'bg-secondary' : 'bg-card'
-        const fbgStyle = isSearch ? 'bg-card' : 'bg-secondary' 
+        const sbgStyle = isSearch ? 'bg-secondary' : 'bg-card';
+        const fbgStyle = isSearch ? 'bg-card' : 'bg-secondary';
 
-        const isFavorite = this.state.filter === 'favorites'
-        const renderMode = isFavorite? this.state.favoriteList : this.state.foodList
-
-        console.log(this.state.foodList)
+        const isFavorite = this.state.filter === 'favorites';
+        const renderMode = isFavorite? this.state.favoriteList : this.state.foodList;
 
         return (
             <div className=" bg-background min-h-screen ">
@@ -77,7 +90,8 @@ class Home extends React.Component {
                     <SearchRecipe onChange={this.handleChange} />
                     <FilterButton sbgStyle={sbgStyle} fbgStyle={fbgStyle} srhButton={this.toggleSearch} fvrButton={this.toggleFavorites} />
                     <div className="relative flex-grow">
-                        {this.state.isLoading? <Loading />: <CardContainer foodList={renderMode} onClick={this.addFavorite} favorites={this.state.favoriteList} />}
+                        {this.state.isLoading? <Loading />: <CardContainer foodList={renderMode} onClick={this.addFavorite} favorites={this.state.favoriteList} showInfo={this.handleClick} />}
+                        {this.state.isClicked && <CardInfo onClick={this.handleClick} cardInfo={this.state.selectedRecipe} />}
                     </div>
                 </div>
             </div>
