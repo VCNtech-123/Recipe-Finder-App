@@ -11,7 +11,6 @@ import { debounce, recipeFinder } from '../utils/helper'
 class Home extends React.Component {
 
     state={
-        isClicked: false,
         foodList: [],
         favoriteList: [],
         isLoading: true,
@@ -27,15 +26,17 @@ class Home extends React.Component {
     }
 
     handleClick = (id) => {
-        this.setState((prevState) => ({ isClicked: !prevState.isClicked })); 
-        
         const isSearch = this.state.filter === 'search' 
         if (isSearch) {
-            this.setState({ selectedRecipe: recipeFinder(id, foodList) }) 
+            this.setState({ selectedRecipe: recipeFinder(id, this.state.foodList) }) 
         }
         else {
-            this.setState({ selectedRecipe: recipeFinder(id, favoriteList) }) 
+            this.setState({ selectedRecipe: recipeFinder(id, this.state.favoriteList) }) 
         }
+    }
+
+    closeCardModal = () => {
+        this.setState({selectedRecipe: null})
     }
 
     debouceSearch = debounce(async (searchValue) => {
@@ -75,7 +76,7 @@ class Home extends React.Component {
     }   
 
     render() {
-
+        
         const isSearch = this.state.filter === 'search';
         const sbgStyle = isSearch ? 'bg-secondary' : 'bg-card';
         const fbgStyle = isSearch ? 'bg-card' : 'bg-secondary';
@@ -83,6 +84,7 @@ class Home extends React.Component {
         const isFavorite = this.state.filter === 'favorites';
         const renderMode = isFavorite? this.state.favoriteList : this.state.foodList;
 
+        console.log(this.state.selectedRecipe);
         return (
             <div className=" bg-background min-h-screen ">
                 <div className="lg:w-[1120px] mx-auto p-4 flex flex-col gap-4">
@@ -91,7 +93,7 @@ class Home extends React.Component {
                     <FilterButton sbgStyle={sbgStyle} fbgStyle={fbgStyle} srhButton={this.toggleSearch} fvrButton={this.toggleFavorites} />
                     <div className="relative flex-grow">
                         {this.state.isLoading? <Loading />: <CardContainer foodList={renderMode} onClick={this.addFavorite} favorites={this.state.favoriteList} showInfo={this.handleClick} />}
-                        {this.state.isClicked && <CardInfo onClick={this.handleClick} cardInfo={this.state.selectedRecipe} />}
+                        {this.state.selectedRecipe !== null && <CardInfo onClick={this.closeCardModal} recipeInfo={this.state.selectedRecipe} />}
                     </div>
                 </div>
             </div>

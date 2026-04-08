@@ -30,7 +30,7 @@ class CardInfo extends React.Component {
                         }}/>
                     <h1 className="absolute top-45 left-5 font-body text-2xl text-white font-bold">{recipeInfo.foodName}</h1>
                     <div className="flex gap-4 absolute top-55 left-4">
-                            {recipeInfo.labels.map(label => <FoodLabel label={label} key={label} className={'text-xs bg-background/50 flex items-center justify-center py-1 px-5 rounded-2xl text-foreground border-1 border-card '} />)}        
+                            {recipeInfo.tags.map(label => <FoodLabel label={label} key={label} className={'text-xs bg-background/50 flex items-center justify-center py-1 px-5 rounded-2xl text-foreground border-1 border-card '} />)}        
                     </div>
                 </div>
                 <div className="flex flex-col px-4 py-3 gap-6">
