@@ -5,16 +5,16 @@ import FilterButton from '../components/FilterButton'
 import CardContainer from '../components/CardContainer'
 import Loading from '../components/Loading';
 import { searchFood, initialRandomFoods } from '../utils/api'
-import { debounce } from '../utils/helper'
+import { debounce, recipeFinder } from '../utils/helper'
 
 class Home extends React.Component {
 
     state={
         foodList: [],
+        favoriteList: [],
         isLoading: true,
         filter: 'search'
     }
-
 
     componentDidMount () {
         (async () => {
@@ -23,14 +23,12 @@ class Home extends React.Component {
         })()
     }
 
-
     debouceSearch = debounce(async (searchValue) => {
         this.setState({isLoading: true});
         const data = await searchFood(searchValue);
 
         this.setState({isLoading: false, foodList: data})
     }, 500);
-
 
     handleChange = (e) => {
         const searchValue = e.target.value;
@@ -44,6 +42,21 @@ class Home extends React.Component {
 
     toggleSearch = () => {
         this.setState({ filter: 'search' })
+    }   
+
+    addFavorite = (id) => {
+        this.setState((prevState) =>{
+
+            const isFav = prevState.favoriteList.some(fav => fav.id === +id);
+
+            if (isFav) return { favoriteList: prevState.favoriteList.filter(meal => meal.id !== +id) }
+
+            const newFav = recipeFinder(id, this.state.foodList)
+
+            return {
+                favoriteList: [...prevState.favoriteList, newFav]
+            }
+        });
     }
 
     render() {
@@ -52,6 +65,8 @@ class Home extends React.Component {
         const sbgStyle = isSearch ? 'bg-secondary' : 'bg-card'
         const fbgStyle = isSearch ? 'bg-card' : 'bg-secondary' 
 
+        console.log(this.state.favoriteList)
+
         return (
             <div className=" bg-background min-h-screen ">
                 <div className="lg:w-[1120px] mx-auto p-4 flex flex-col gap-4">
@@ -59,12 +74,12 @@ class Home extends React.Component {
                     <SearchRecipe onChange={this.handleChange} />
                     <FilterButton sbgStyle={sbgStyle} fbgStyle={fbgStyle} srhButton={this.toggleSearch} fvrButton={this.toggleFavorites} />
                     <div className="relative flex-grow">
-                        {this.state.isLoading? <Loading />: <CardContainer foodList={this.state.foodList} />}
+                        {this.state.isLoading? <Loading />: <CardContainer foodList={this.state.foodList} onClick={this.addFavorite} />}
                     </div>
                 </div>
             </div>
         )
     }
 }
-
+ /* bg-white/80 */
 export default Home;

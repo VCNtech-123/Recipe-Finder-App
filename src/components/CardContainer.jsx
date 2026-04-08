@@ -60,20 +60,30 @@ class CardInfo extends React.Component {
 class Card extends React.Component {
 
     state = {
-        clicked: false
+        clicked: false,
+        favClicked: false
     }
 
     handleClick = () => {
         this.setState((prevState) => ({ clicked: !prevState.clicked })); 
     }
 
+    favoriteCard = (e) => {
+        this.setState((prevState) => ({ favClicked: !prevState.favClicked }))
+        e.stopPropagation()
+        this.props.onClick(this.props.id);
+    }
+
     render () {
 
-        const { picture, labels, foodName, ingredients, instructions, onClick } = this.props
+        const { picture, labels, foodName, ingredients, instructions } = this.props
+
+        const isClicked = this.state.favClicked
+        const favBg = isClicked ? 'bg-yellow-300/80' :' bg-white/80'
 
         return(
         !this.state.clicked? (
-            <div className="flex flex-col h-full shadow-md w-[calc(50%_-_1rem)] bg-card font-body rounded-xl pb-4 relative lg:hover:scale-105 300ms ease-in-out" onClick={this.handleClick}>
+            <div className="flex flex-col h-full shadow-md w-[calc(50%_-_1rem)] bg-card font-body rounded-xl pb-4 relative lg:hover:scale-105 300ms ease-in-out z-40" onClick={this.handleClick}>
                 <div>
                     <img src={picture} alt={'picture'} className="rounded-t-xl hover:scale-110 ease-in-out duration-300 transition-transform object-cover min-h-50 max-h-50 w-full" />
                 </div>
@@ -83,7 +93,7 @@ class Card extends React.Component {
                         {labels.map(label => <FoodLabel key={label} label={label} className={'text-xs bg-background flex items-center justify-center py-1 px-3 rounded-2xl text-foreground border-1 border-card'} />)}
                     </div>
                 </div>
-                <div className="absolute bg-white/80 border-white rounded-full p-2 top-2 right-2" onClick={onClick}>
+                <div className={`absolute ${favBg} border-white rounded-full p-2 top-2 right-2 z-50`} onClick={this.favoriteCard}>
                     <CiHeart />
                 </div>
             </div>
@@ -96,11 +106,10 @@ class Card extends React.Component {
 }
 
 class CardCointainer extends React.Component {
-        
     render() {
          return (
             <div className="flex flex-wrap gap-4 justify-center items-center">
-                {this.props.foodList.map(food => <Card key={food.id} picture={food.picture} labels={food.tags} foodName={food.name} instructions={food.instructions} ingredients={food.ingredients} onClick={this.props.onClick} />)}
+                {this.props.foodList.map(food => <Card key={food.id} id={food.id} picture={food.picture} labels={food.tags} foodName={food.name} instructions={food.instructions} ingredients={food.ingredients} onClick={this.props.onClick} />)}
             </div>
         )
     }

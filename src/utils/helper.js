@@ -8,3 +8,7 @@ export const debounce = (func, delay) => {
         }, delay)
     }
 }
+
+export const recipeFinder = (id, arr) => {
+    return arr.find (meal => meal.id === +id); 
+}
