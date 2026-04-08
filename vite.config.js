@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: '/recipe-finder-app/',
+  base: '/Recipe-Finder-App/',
   plugins: [
     react(),
     tailwindcss(),
