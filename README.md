@@ -2,7 +2,7 @@
 
 **The Daily Plate** is a high-performance recipe discovery platform engineered with **React**, **Tailwind CSS**, and **TheMealDB API**. It features real-time search indexing, optimized data persistence, and a streamlined interface designed for professional-grade performance.
 
-[View Live Project](YOUR_LIVE_LINK_HERE) | [View Portfolio](https://vcntech-123.github.io/Personal-Web-Portfolio/index.html)
+[View Live Project](https://vcntech-123.github.io/Recipe-Finder-App/) | [View Portfolio](https://vcntech-123.github.io/Personal-Web-Portfolio/index.html)
 
 ---
 

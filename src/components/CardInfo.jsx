@@ -28,7 +28,7 @@ class CardInfo extends React.Component {
                         maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
                         WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' 
                         }}/>
-                    <h1 className="absolute top-45 left-5 font-body text-2xl text-white font-bold">{recipeInfo.foodName}</h1>
+                    <h1 className="absolute top-45 left-5 font-body text-2xl text-white font-bold">{recipeInfo.name}</h1>
                     <div className="flex gap-4 absolute top-55 left-4">
                             {recipeInfo.tags.map(label => <FoodLabel label={label} key={label} className={'text-xs bg-background/50 flex items-center justify-center py-1 px-5 rounded-2xl text-foreground border-1 border-card '} />)}        
                     </div>
