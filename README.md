@@ -5,7 +5,7 @@
 [View Live Project](https://vcntech-123.github.io/Recipe-Finder-App/) | [View Portfolio]
 
 ---
-
+ 
 ## 🚀 Core Features
 
 * **Smart Search:** Real-time recipe filtering powered by a custom **Debounce** mechanism to minimize API overhead and improve performance.
