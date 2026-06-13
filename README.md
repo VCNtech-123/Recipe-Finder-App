@@ -1,4 +1,4 @@
- # 🍽️ The Daily Plate
+ # 🍽️ The Daily Plate 
  
 **The Daily Plate** is a high-performance recipe discovery platform engineered with **React**, **Tailwind CSS**, and **TheMealDB API**. It features real-time search indexing, optimized data persistence, and a streamlined interface designed for professional-grade performance.
 
